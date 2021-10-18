@@ -5,8 +5,9 @@ const sendRequest = require('./send-request.js');
 
 const xml2js = require('xml2js');
 const { promisify } = require('util');
-const xmlParser = new xml2js.Parser({ explicitArray: false });
+const xmlParser = new xml2js.Parser({ explicitArray: false, trim: true });
 const parseXml = promisify(xmlParser.parseString).bind(xmlParser);
+var zlib = require('zlib');
 
 /**
  * Query previously sent invoices with invoice number or query params.
@@ -49,10 +50,19 @@ module.exports = async function queryInvoiceData({
   if (!invoiceDataResult) {
     return responseData.QueryInvoiceDataResponse;
   }
+  try {
 
-  invoiceDataResult.invoiceData = await parseXml(
-    Buffer.from(invoiceDataResult.invoiceData, 'base64')
-  );
+    const buff = Buffer.from(invoiceDataResult.invoiceData, 'base64')
+    if (invoiceDataResult.compressedContentIndicator=="true"){
+      invoiceDataResult.invoiceData = await parseXml(zlib.gunzipSync(buff));
+    } else {
+      invoiceDataResult.invoiceData = await parseXml(buff);
+    }
 
-  return invoiceDataResult;
+    return invoiceDataResult;
+  } catch (err){
+    console.log(err);
+    return {};
+  }
+
 };
