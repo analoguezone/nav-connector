@@ -1,30 +1,33 @@
 # nav-connector
 
-This is a fork of @angro/nav-connector with compression support for queryInvoiceData request.
-
 [![codecov](https://codecov.io/gh/angro-kft/nav-connector/branch/dev/graph/badge.svg)](https://codecov.io/gh/angro-kft/nav-connector)
 [![npm (scoped)](https://img.shields.io/npm/v/@angro/nav-connector.svg)](https://www.npmjs.com/package/@angro/nav-connector)
 [![license](https://img.shields.io/github/license/angro-kft/nav-connector.svg)](https://github.com/angro-kft/nav-connector/blob/dev/LICENSE)
 ![nav](https://img.shields.io/badge/NAV%20service%20version%20compatible-2.10-blue.svg)
 ![nav-interface](https://img.shields.io/badge/NAV%20interface%20version%20compatible-3.0-blue.svg)
 
+
+
+This is a fork of @angro/nav-connector with compression support for queryInvoiceData request.
+
+## Installation
+
+Tested with version 12.18.3 and v14.15.4 of Node.js.
+
+```sh
+$ npm install nav-connector-zlib
+```
+
 Node.js module which provides an interface for communicating with NAV online invoice service.
 
 This module was developed in order to satisfy the following specification:  
 [Online invoice interface specification](https://onlineszamla-test.nav.gov.hu/api/files/container/download/Online%20Szamla_Interfesz%20specifik%C3%A1ci%C3%B3_EN.pdf)
 
-## Installation
-
-Tested with version 12.18.3 of Node.js.
-
-```sh
-$ npm install @angro/nav-connector
-```
 
 ## Example
 
 ```js
-const NavConnector = require('@angro/nav-connector');
+const NavConnector = require('nav-connector-zlib');
 
 /* Your technical user's data. */
 const technicalUser = {
